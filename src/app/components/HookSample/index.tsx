@@ -1,26 +1,42 @@
 import * as React from 'react'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 namespace HookSample {
   export interface Props {}
   export interface State {}
 }
 
+const DEFAULT_TIME = 10000
+
 const HookSample: FC = () => {
-  const [count, setCount] = useState(0)
+  const [time, setTime] = useState<number>(DEFAULT_TIME)
 
   const increment = () => {
-    setCount(count + 1)
+    setTime(time + 1)
   }
 
   const decrement = () => {
-    setCount(count - 1)
+    setTime(time - 1)
   }
+
+  const reset = () => {
+    setTime(DEFAULT_TIME)
+  }
+
+  const tick = () => setTime((prevTime: number) => prevTime - 1)
+
+  useEffect(() => {
+    console.log('useEffect')
+    const timerId = setInterval(tick, 50)
+
+    return () => clearInterval(timerId)
+  }, [])
 
   return (
     <>
-      <p>current value: {count}</p>
+      <p>current value: {time}</p>
       <button onClick={increment}>+</button> / <button onClick={decrement}>-</button>
+      <button onClick={reset}>reset</button>
     </>
   )
 }
