@@ -1,24 +1,25 @@
-import words from '@/assets/strings'
 import * as React from 'react'
+import { FC } from 'react'
 
 namespace HookSample {
   export interface Props {}
   export interface State {}
 }
 
-export default class HookSample extends React.Component<HookSample.Props, HookSample.State> {
-  handleBackClick = () => {
-    alert(words.footer.back)
+const HookSample: FC = () => {
+  const increment = () => {
+    alert('+')
   }
 
-  handleForwardClick = () => {
-    alert(words.footer.forward)
+  const decrement = () => {
+    alert('-')
   }
 
-  render = () => (
+  return (
     <>
-      <button onClick={this.handleBackClick}>{words.footer.back}</button>
-      <button onClick={this.handleForwardClick}>{words.footer.forward}</button>
+      <button onClick={increment}>+</button> / <button onClick={decrement}>-</button>
     </>
   )
 }
+
+export default HookSample
