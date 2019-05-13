@@ -1,4 +1,5 @@
 import { login, Login } from '@/app/actions/login'
+import HookSample from '@/app/components/HookSample/index'
 import { RootState } from '@/app/models'
 import words from '@/assets/strings'
 import { History } from 'history'
@@ -64,6 +65,7 @@ class LoginApp extends React.Component<LoginApp.Props, LoginApp.State> {
 
   render = () => (
     <div className={style.container}>
+      <HookSample />
       <h1 className={style.header}>{words.login.title}</h1>
       <div>
         <input
