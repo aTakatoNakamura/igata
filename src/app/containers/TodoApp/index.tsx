@@ -1,5 +1,5 @@
 import { logout, Logout } from '@/app/actions/login'
-import { addTodo, AddTodo, fetchTodos, FetchTodos } from '@/app/actions/todo'
+import { addTodo, AddTodo, fetchTodos, FetchTodos, renewTodo, RenewTodo } from '@/app/actions/todo'
 import { ListWrapper } from '@/app/components/ListWrapper'
 import { RootState } from '@/app/models'
 import { Todo } from '@/app/models/Todo'
@@ -16,6 +16,7 @@ interface Props {
   addTodo: AddTodo
   fetchTodos: FetchTodos
   logout: Logout
+  renewTodo: RenewTodo
 }
 
 interface State {
@@ -28,6 +29,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = {
+  renewTodo,
   addTodo,
   fetchTodos,
   logout,
@@ -75,7 +77,11 @@ class TodoApp extends React.Component<Props, State> {
 
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: update the checked state to store
+    this.props.renewTodo(e.target.checked)
+    console.log(e.target)
+    console.log(e.target.checked)
     console.log(e.target.value)
+    console.log(this.props.todos[0])
   }
 
   render = () => {

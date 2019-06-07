@@ -37,6 +37,21 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
     case Type.FETCH_TODOS_FAILURE:
       return state
 
+    case Type.RENEW_TODO:
+      console.log(state.todos)
+      console.log(action.payload.bool)
+      // state.todos[0].done = action.payload.bool // ここで怒られてる
+      return state
+    // return {
+    //   todos: [
+    //     ...state.todos,
+    //     {
+    //       done: action.payload.bool,
+    //       text: 'bug'
+    //     },
+    //   ],
+    // }
+
     default:
       return state
   }
