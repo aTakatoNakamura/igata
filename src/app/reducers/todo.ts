@@ -17,7 +17,7 @@ const defaultState: TodoState = {
 
 export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = defaultState, action: TodoAction): TodoState => {
   switch (action.type) {
-    case Type.ADD_TODO:
+    case Type.ADD_TODO: {
       return {
         todos: [
           ...state.todos,
@@ -27,31 +27,23 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
           },
         ],
       }
-
-    case Type.FETCH_TODOS:
+    }
+    case Type.FETCH_TODOS: {
       return state
-
-    case Type.FETCH_TODOS_SUCCESS:
+    }
+    case Type.FETCH_TODOS_SUCCESS: {
       return { todos: action.payload.todos }
-
-    case Type.FETCH_TODOS_FAILURE:
+    }
+    case Type.FETCH_TODOS_FAILURE: {
       return state
+    }
+    case Type.RENEW_TODO: {
+      const todoList = state.todos.slice()
+      todoList[0] = { ...todoList[0], done: action.payload.bool }
+      const stateCopy = { ...state, todos: todoList }
 
-    case Type.RENEW_TODO:
-      console.log(state.todos)
-      console.log(action.payload.bool)
-      // state.todos[0].done = action.payload.bool // ここで怒られてる
-      return state
-    // return {
-    //   todos: [
-    //     ...state.todos,
-    //     {
-    //       done: action.payload.bool,
-    //       text: 'bug'
-    //     },
-    //   ],
-    // }
-
+      return stateCopy
+    }
     default:
       return state
   }
