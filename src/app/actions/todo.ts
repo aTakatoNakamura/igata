@@ -14,7 +14,7 @@ export type AddTodo = (text: string) => void
 export type FetchTodos = () => void
 export type fetchTodosSuccess = (todos: Todo[]) => void
 export type fetchTodosFailure = (errorCode: string) => void
-export type RenewTodo = (bool: boolean) => void
+export type RenewTodo = (bool: boolean, id: number) => void
 
 // action creators
 export const addTodo = (text: string) => ({
@@ -36,9 +36,9 @@ export const fetchTodosFailure = (errorText: string) => ({
   payload: { errorText },
 })
 
-export const renewTodo = (bool: boolean) => ({
+export const renewTodo = (done: boolean, id: number) => ({
   type: Type.RENEW_TODO,
-  payload: { done: bool },
+  payload: { done, id },
 })
 
 export type TodoAction =

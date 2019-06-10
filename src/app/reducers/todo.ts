@@ -42,8 +42,8 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
     }
     case Type.RENEW_TODO: {
       const todoList = state.todos.slice()
-      console.log(action)
-      todoList[0] = { ...todoList[0], done: action.payload.done }
+      const index = action.payload.id - 1
+      todoList[index] = { ...todoList[index], done: action.payload.done }
       const stateCopy = { ...state, todos: todoList }
 
       return stateCopy
