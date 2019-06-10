@@ -1,5 +1,5 @@
 import { logout, Logout } from '@/app/actions/login'
-import { addTodo, AddTodo, fetchTodos, FetchTodos, renewTodo, RenewTodo } from '@/app/actions/todo'
+import { addTodo, AddTodo, fetchTodos, FetchTodos, renewTodo, RenewTodo, deleteTodo, DeleteTodo } from '@/app/actions/todo'
 import { ListWrapper } from '@/app/components/ListWrapper'
 import { RootState } from '@/app/models'
 import { Todo } from '@/app/models/Todo'
@@ -17,6 +17,7 @@ interface Props {
   fetchTodos: FetchTodos
   logout: Logout
   renewTodo: RenewTodo
+  deleteTodo: DeleteTodo
 }
 
 interface State {
@@ -29,6 +30,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = {
+  deleteTodo,
   renewTodo,
   addTodo,
   fetchTodos,
@@ -60,6 +62,10 @@ class TodoApp extends React.Component<Props, State> {
   handleFetchTodos = () => this.props.fetchTodos()
 
   handleLogout = () => this.props.logout()
+
+  handleDelete = (e: any, id: number) => {
+    this.props.deleteTodo(id)
+  }
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({
@@ -129,6 +135,9 @@ class TodoApp extends React.Component<Props, State> {
                 checked={todo.done}
               />
               <label className={style.todoText}>{todo.text}</label>
+              <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
+                delete
+              </button>
             </li>
           ))}
         </ListWrapper>

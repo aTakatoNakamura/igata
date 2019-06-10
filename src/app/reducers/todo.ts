@@ -48,6 +48,12 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
 
       return stateCopy
     }
+    case Type.DELETE_TODO: {
+      const todoList = state.todos.slice()
+      const index = todoList.findIndex(item => item.id === action.payload.id)
+      todoList.splice(index, 1)
+      return { ...state, todos: todoList }
+    }
     default:
       return state
   }
