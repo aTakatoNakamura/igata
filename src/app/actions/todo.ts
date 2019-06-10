@@ -38,7 +38,7 @@ export const fetchTodosFailure = (errorText: string) => ({
 
 export const renewTodo = (bool: boolean) => ({
   type: Type.RENEW_TODO,
-  payload: { bool },
+  payload: { done: bool },
 })
 
 export type TodoAction =

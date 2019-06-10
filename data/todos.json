@@ -2,15 +2,18 @@
   "todos": [
     {
       "done": true,
-      "text": "sleep for 15 hours"
+      "text": "sleep for 15 hours",
+      "id": 1
     },
     {
       "done": false,
-      "text": "eat nice fried rice"
+      "text": "eat nice fried rice",
+      "id": 2
     },
     {
       "done": false,
-      "text": "watch nice animation movie"
+      "text": "watch nice animation movie",
+      "id": 3
     }
   ]
 }

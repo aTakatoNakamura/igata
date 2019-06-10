@@ -7,10 +7,12 @@ const defaultState: TodoState = {
     {
       text: 'Cook and eat my graceful fried rice',
       done: false,
+      id: 1,
     },
     {
       text: 'Sleep for 15 hours',
       done: true,
+      id: 2,
     },
   ],
 }
@@ -24,6 +26,7 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
           {
             done: false,
             text: action.payload.text,
+            id: state.todos.length + 1,
           },
         ],
       }
@@ -39,7 +42,8 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
     }
     case Type.RENEW_TODO: {
       const todoList = state.todos.slice()
-      todoList[0] = { ...todoList[0], done: action.payload.bool }
+      console.log(action)
+      todoList[0] = { ...todoList[0], done: action.payload.done }
       const stateCopy = { ...state, todos: todoList }
 
       return stateCopy

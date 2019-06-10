@@ -78,10 +78,11 @@ class TodoApp extends React.Component<Props, State> {
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: update the checked state to store
     this.props.renewTodo(e.target.checked)
-    console.log(e.target)
+    console.log(e.currentTarget.tabIndex)
     console.log(e.target.checked)
     console.log(e.target.value)
-    console.log(this.props.todos[0])
+    console.log(e.target)
+    console.log(this.props)
   }
 
   render = () => {
