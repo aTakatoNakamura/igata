@@ -32,27 +32,30 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
       }
     }
     case Type.FETCH_TODOS: {
+      console.log(state)
       return state
     }
     case Type.FETCH_TODOS_SUCCESS: {
+      console.log(action.payload.todos)
       return { todos: action.payload.todos }
     }
     case Type.FETCH_TODOS_FAILURE: {
       return state
     }
-    case Type.RENEW_TODO: {
+    case Type.MARK_TODO: {
       const todoList = state.todos.slice()
-      const index = action.payload.id - 1
+      const index = todoList.findIndex(item => item.id === action.payload.id)
       todoList[index] = { ...todoList[index], done: action.payload.done }
       const stateCopy = { ...state, todos: todoList }
 
       return stateCopy
     }
     case Type.DELETE_TODO: {
-      const todoList = state.todos.slice()
-      const index = todoList.findIndex(item => item.id === action.payload.id)
-      todoList.splice(index, 1)
-      return { ...state, todos: todoList }
+      return { ...state, todos: state.todos.filter(todo => todo.id !== action.payload.id) }
+    }
+    case Type.EDIT_TODO: {
+      // TODO: TODO本文の編集
+      return state
     }
     default:
       return state

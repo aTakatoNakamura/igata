@@ -6,8 +6,9 @@ export const Type = {
   FETCH_TODOS: 'TODOS/FETCH_TODOS' as 'TODOS/FETCH_TODOS',
   FETCH_TODOS_SUCCESS: 'TODOS/FETCH_TODOS_SUCCESS' as 'TODOS/FETCH_TODOS_SUCCESS',
   FETCH_TODOS_FAILURE: 'TODOS/FETCH_TODOS_FAILURE' as 'TODOS/FETCH_TODOS_FAILURE',
-  RENEW_TODO: 'TODOS/RENEW_TODO' as 'TODOS/RENEW_TODO',
+  MARK_TODO: 'TODOS/MARK_TODO' as 'TODOS/MARK_TODO',
   DELETE_TODO: 'TODOS/DELETE_TODO' as 'TODOS/DELETE_TODO',
+  EDIT_TODO: 'TODOS/EDIT_TODO' as 'TODOS/EDIT_TODO',
 }
 
 // action creator interfaces
@@ -15,8 +16,9 @@ export type AddTodo = (text: string) => void
 export type FetchTodos = () => void
 export type fetchTodosSuccess = (todos: Todo[]) => void
 export type fetchTodosFailure = (errorCode: string) => void
-export type RenewTodo = (bool: boolean, id: number) => void
+export type MarkTodo = (bool: boolean, id: number) => void
 export type DeleteTodo = (id: number) => void
+export type EditTodo = (id: number, text: string) => void
 
 // action creators
 export const addTodo = (text: string) => ({
@@ -38,8 +40,8 @@ export const fetchTodosFailure = (errorText: string) => ({
   payload: { errorText },
 })
 
-export const renewTodo = (done: boolean, id: number) => ({
-  type: Type.RENEW_TODO,
+export const markTodo = (done: boolean, id: number) => ({
+  type: Type.MARK_TODO,
   payload: { done, id },
 })
 
@@ -48,10 +50,16 @@ export const deleteTodo = (id: number) => ({
   payload: { id },
 })
 
+export const editTodo = (id: number, text: string) => ({
+  type: Type.EDIT_TODO,
+  payload: { id, text },
+})
+
 export type TodoAction =
   | ReturnType<typeof addTodo>
   | ReturnType<typeof fetchTodos>
   | ReturnType<typeof fetchTodosSuccess>
   | ReturnType<typeof fetchTodosFailure>
-  | ReturnType<typeof renewTodo>
+  | ReturnType<typeof markTodo>
   | ReturnType<typeof deleteTodo>
+  | ReturnType<typeof editTodo>
