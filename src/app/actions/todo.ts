@@ -18,7 +18,7 @@ export type fetchTodosSuccess = (todos: Todo[]) => void
 export type fetchTodosFailure = (errorCode: string) => void
 export type MarkTodo = (bool: boolean, id: number) => void
 export type DeleteTodo = (id: number) => void
-export type EditTodo = (id: number, text: string) => void
+export type EditTodo = (text: string, id: number) => void
 
 // action creators
 export const addTodo = (text: string) => ({
@@ -50,7 +50,7 @@ export const deleteTodo = (id: number) => ({
   payload: { id },
 })
 
-export const editTodo = (id: number, text: string) => ({
+export const editTodo = (text: string, id: number) => ({
   type: Type.EDIT_TODO,
   payload: { id, text },
 })

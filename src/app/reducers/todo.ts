@@ -54,8 +54,11 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
       return { ...state, todos: state.todos.filter(todo => todo.id !== action.payload.id) }
     }
     case Type.EDIT_TODO: {
-      // TODO: TODO本文の編集
-      return state
+      const todoList = state.todos.slice()
+      const index = todoList.findIndex(item => item.id === action.payload.id)
+      console.log(todoList)
+      todoList[index] = { ...todoList[index], text: action.payload.text }
+      return { ...state, todos: todoList }
     }
     default:
       return state

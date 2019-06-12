@@ -8,8 +8,8 @@ import {
   MarkTodo,
   deleteTodo,
   DeleteTodo,
-  // editTodo,
-  // EditTodo,
+  editTodo,
+  EditTodo,
 } from '@/app/actions/todo'
 import { ListWrapper } from '@/app/components/ListWrapper'
 import { RootState } from '@/app/models'
@@ -29,7 +29,7 @@ interface Props {
   logout: Logout
   markTodo: MarkTodo
   deleteTodo: DeleteTodo
-  // editTodo: UpdateTodo
+  editTodo: EditTodo
 }
 
 interface State {
@@ -42,7 +42,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = {
-  // editTodo,
+  editTodo,
   deleteTodo,
   markTodo,
   addTodo,
@@ -72,6 +72,16 @@ class TodoApp extends React.Component<Props, State> {
     })
   }
 
+  editTodo = (e: any, id: number) => {
+    if (!this.state.currentText) {
+      return
+    }
+    this.props.editTodo(this.state.currentText, id)
+    this.setState({
+      currentText: '',
+    })
+  }
+
   handleFetchTodos = () => this.props.fetchTodos()
 
   handleLogout = () => this.props.logout()
@@ -87,6 +97,8 @@ class TodoApp extends React.Component<Props, State> {
 
   handleAddTodoClick = () => this.addTodo()
 
+  handleEditTodoClick = (e: any, id: number) => this.editTodo(e, id)
+
   handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return
@@ -94,11 +106,16 @@ class TodoApp extends React.Component<Props, State> {
     this.addTodo()
   }
 
+  handleEditKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, id: number) => {
+    if (e.key !== 'Enter') {
+      return
+    }
+    this.editTodo(e, id)
+  }
+
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     // TODO: update the checked state to store
     this.props.markTodo(e.target.checked, id)
-    console.log(e.target)
-    console.log(e.target.checked)
   }
 
   render = () => {
@@ -141,16 +158,29 @@ class TodoApp extends React.Component<Props, State> {
         <ListWrapper>
           {this.props.todos.map((todo: Todo) => (
             <li className={style.list} key={key(todo)}>
+              <div>
+                <input
+                  className={style.checkbox}
+                  type="checkbox"
+                  onChange={e => this.handleCheckBoxClick(e, todo.id)}
+                  checked={todo.done}
+                />
+                <label className={style.todoText}>{todo.id}</label>
+                <label className={style.todoText}>{todo.text}</label>
+                <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
+                  delete
+                </button>
+              </div>
               <input
-                className={style.checkbox}
-                type="checkbox"
-                onChange={e => this.handleCheckBoxClick(e, todo.id)}
-                checked={todo.done}
+                className={style.inputTodo}
+                type="text"
+                onChange={this.handleInputChange}
+                onKeyPress={e => this.handleEditKeyPress(e, todo.id)}
+                placeholder={words.todoApp.editPlaceholder}
+                value={this.state.currentText}
               />
-              <label className={style.todoText}>{todo.id}</label>
-              <label className={style.todoText}>{todo.text}</label>
-              <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
-                delete
+              <button type="button" className={style.addButton} onClick={e => this.handleEditTodoClick(e, todo.id)}>
+                {words.todoApp.addTodo}
               </button>
             </li>
           ))}
