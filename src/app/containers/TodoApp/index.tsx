@@ -34,7 +34,7 @@ interface Props {
 
 interface State {
   currentText: string
-  hidden: boolean
+  modalHidden: boolean
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -60,7 +60,7 @@ class TodoApp extends React.Component<Props, State> {
     super(props)
     this.state = {
       currentText: '',
-      hidden: true,
+      modalHidden: true,
     }
   }
 
@@ -120,13 +120,13 @@ class TodoApp extends React.Component<Props, State> {
     this.props.markTodo(e.target.checked, id)
   }
 
-  modalOpen = () => this.setState({ hidden: false })
+  modalOpen = () => this.setState({ modalHidden: false })
 
-  modalClose = () => this.setState({ hidden: true })
+  modalClose = () => this.setState({ modalHidden: true })
 
   modalOutsideCliked = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (document.getElementById('myModal') === e.target) {
-      this.setState({ hidden: true })
+      this.setState({ modalHidden: true })
     }
   }
 
@@ -164,7 +164,7 @@ class TodoApp extends React.Component<Props, State> {
             role="presentation"
             id="myModal"
             className={style.modal}
-            hidden={this.state.hidden}
+            hidden={this.state.modalHidden}
             onClick={this.modalOutsideCliked}
             onKeyPress={this.modalCloseKey}
           >
