@@ -71,7 +71,6 @@ class TodoApp extends React.Component<Props, State> {
     this.props.addTodo(this.state.currentText)
     this.setState({
       currentText: '',
-      hidden: true,
     })
   }
 
