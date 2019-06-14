@@ -62,7 +62,6 @@ class TodoApp extends React.Component<Props, State> {
       currentText: '',
       hidden: true,
     }
-    this.modalOpen = this.modalOpen.bind(this)
   }
 
   addTodo = () => {
@@ -122,19 +121,21 @@ class TodoApp extends React.Component<Props, State> {
     this.props.markTodo(e.target.checked, id)
   }
 
-  // When the user clicks on the button, open the modal
-  modalOpen = () => {
-    console.log(this.state.hidden)
-    this.setState({
-      hidden: false,
-    })
+  modalOpen = () => this.setState({ hidden: false })
+
+  modalClose = () => this.setState({ hidden: true })
+
+  modalOutsideCliked = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (document.getElementById('myModal') === e.target) {
+      this.setState({ hidden: true })
+    }
   }
 
-  // When the user clicks on <span> (x), close the modal
-  modalClose = () => {
-    this.setState({
-      hidden: true,
-    })
+  modalCloseKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log(e.key)
+    if (e.key === 'q') {
+      this.setState({ hidden: true })
+    }
   }
 
   render = () => {
@@ -165,7 +166,14 @@ class TodoApp extends React.Component<Props, State> {
           <button type="button" onClick={this.modalOpen}>
             add Todo
           </button>
-          <div id="myModal" className={style.modal} hidden={this.state.hidden}>
+          <div
+            role="presentation"
+            id="myModal"
+            className={style.modal}
+            hidden={this.state.hidden}
+            onClick={this.modalOutsideCliked}
+            onKeyDown={this.modalCloseKey}
+          >
             <div className={style.modalContent}>
               <button type="button" className={style.close} onClick={this.modalClose}>
                 &times;
