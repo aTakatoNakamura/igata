@@ -34,6 +34,7 @@ interface Props {
 
 interface State {
   currentText: string
+  hidden: boolean
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -59,7 +60,9 @@ class TodoApp extends React.Component<Props, State> {
     super(props)
     this.state = {
       currentText: '',
+      hidden: true,
     }
+    this.modalOpen = this.modalOpen.bind(this)
   }
 
   addTodo = () => {
@@ -69,10 +72,11 @@ class TodoApp extends React.Component<Props, State> {
     this.props.addTodo(this.state.currentText)
     this.setState({
       currentText: '',
+      hidden: true,
     })
   }
 
-  editTodo = (e: any, id: number) => {
+  refreshTodo = (e: any, id: number) => {
     if (!this.state.currentText) {
       return
     }
@@ -97,9 +101,9 @@ class TodoApp extends React.Component<Props, State> {
 
   handleAddTodoClick = () => this.addTodo()
 
-  handleEditTodoClick = (e: any, id: number) => this.editTodo(e, id)
+  handleEditTodoClick = (e: any, id: number) => this.refreshTodo(e, id)
 
-  handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  handleAddKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return
     }
@@ -110,12 +114,27 @@ class TodoApp extends React.Component<Props, State> {
     if (e.key !== 'Enter') {
       return
     }
-    this.editTodo(e, id)
+    this.refreshTodo(e, id)
   }
 
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    // TODO: update the checked state to store
+    // DONE: update the checked state to store
     this.props.markTodo(e.target.checked, id)
+  }
+
+  // When the user clicks on the button, open the modal
+  modalOpen = () => {
+    console.log(this.state.hidden)
+    this.setState({
+      hidden: false,
+    })
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  modalClose = () => {
+    this.setState({
+      hidden: true,
+    })
   }
 
   render = () => {
@@ -143,17 +162,27 @@ class TodoApp extends React.Component<Props, State> {
           </button>
         </div>
         <div>
-          <input
-            className={style.inputTodo}
-            type="text"
-            onChange={this.handleInputChange}
-            onKeyPress={this.handleKeyPress}
-            placeholder={words.todoApp.placeholder}
-            value={this.state.currentText}
-          />
-          <button type="button" className={style.addButton} onClick={this.handleAddTodoClick}>
-            {words.todoApp.addTodo}
+          <button type="button" onClick={this.modalOpen}>
+            add Todo
           </button>
+          <div id="myModal" className={style.modal} hidden={this.state.hidden}>
+            <div className={style.modalContent}>
+              <button type="button" className={style.close} onClick={this.modalClose}>
+                &times;
+              </button>
+              <input
+                className={style.inputTodo}
+                type="text"
+                onChange={this.handleInputChange}
+                onKeyPress={this.handleAddKeyPress}
+                placeholder={words.todoApp.placeholder}
+                value={this.state.currentText}
+              />
+              <button type="button" className={style.addButton} onClick={this.handleAddTodoClick}>
+                {words.todoApp.addTodo}
+              </button>
+            </div>
+          </div>
         </div>
         <ListWrapper>
           {this.props.todos.map((todo: Todo) => (
