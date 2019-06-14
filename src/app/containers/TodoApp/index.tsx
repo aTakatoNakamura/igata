@@ -130,12 +130,7 @@ class TodoApp extends React.Component<Props, State> {
     }
   }
 
-  modalCloseKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(e.key)
-    if (e.key === 'q') {
-      this.setState({ hidden: true })
-    }
-  }
+  modalCloseKey = () => {}
 
   render = () => {
     const tokenHeader = (token: string) => (
@@ -171,7 +166,7 @@ class TodoApp extends React.Component<Props, State> {
             className={style.modal}
             hidden={this.state.hidden}
             onClick={this.modalOutsideCliked}
-            onKeyDown={this.modalCloseKey}
+            onKeyPress={this.modalCloseKey}
           >
             <div className={style.modalContent}>
               <button type="button" className={style.close} onClick={this.modalClose}>
