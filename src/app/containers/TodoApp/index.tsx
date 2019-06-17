@@ -116,7 +116,6 @@ class TodoApp extends React.Component<Props, State> {
   }
 
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    // DONE: update the checked state to store
     this.props.markTodo(e.target.checked, id)
   }
 
