@@ -124,10 +124,8 @@ class TodoApp extends React.Component<Props, State> {
 
   modalClose = () => this.setState({ modalHidden: true })
 
-  modalOutsideCliked = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (document.getElementById('myModal') === e.target) {
-      this.setState({ modalHidden: true })
-    }
+  modalOutsideClicked = () => {
+    this.setState({ modalHidden: true })
   }
 
   render = () => {
@@ -163,7 +161,7 @@ class TodoApp extends React.Component<Props, State> {
             id="createModal"
             className={style.modal}
             hidden={this.state.modalHidden}
-            onClick={this.modalOutsideCliked}
+            onClick={this.modalOutsideClicked}
             onKeyPress={() => {}}
           >
             <div className={style.modalContent}>
