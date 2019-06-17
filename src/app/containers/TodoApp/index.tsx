@@ -151,35 +151,32 @@ class TodoApp extends React.Component<Props, State> {
             {words.todoApp.logout}
           </button>
         </div>
-        <div>
-          <button type="button" onClick={this.modalOpen}>
-            add Todo
+        <button type="button" onClick={this.modalOpen}>
+          add Todo
+        </button>
+        <div
+          role="presentation"
+          id="createModal"
+          className={style.modal}
+          hidden={this.state.modalHidden}
+          onClick={this.modalOutsideClicked}
+          onKeyPress={() => ({})}
+        />
+        <div className={style.modalContent} hidden={this.state.modalHidden}>
+          <button type="button" className={style.close} onClick={this.modalClose}>
+            &times;
           </button>
-          <div
-            role="presentation"
-            id="createModal"
-            className={style.modal}
-            hidden={this.state.modalHidden}
-            onClick={this.modalOutsideClicked}
-            onKeyPress={() => {}}
-          >
-            <div className={style.modalContent}>
-              <button type="button" className={style.close} onClick={this.modalClose}>
-                &times;
-              </button>
-              <input
-                className={style.inputTodo}
-                type="text"
-                onChange={this.handleInputChange}
-                onKeyPress={this.handleAddKeyPress}
-                placeholder={words.todoApp.placeholder}
-                value={this.state.currentText}
-              />
-              <button type="button" className={style.addButton} onClick={this.handleAddTodoClick}>
-                {words.todoApp.addTodo}
-              </button>
-            </div>
-          </div>
+          <input
+            className={style.inputTodo}
+            type="text"
+            onChange={this.handleInputChange}
+            onKeyPress={this.handleAddKeyPress}
+            placeholder={words.todoApp.placeholder}
+            value={this.state.currentText}
+          />
+          <button type="button" className={style.addButton} onClick={this.handleAddTodoClick}>
+            {words.todoApp.addTodo}
+          </button>
         </div>
         <ListWrapper>
           {this.props.todos.map((todo: Todo) => (
