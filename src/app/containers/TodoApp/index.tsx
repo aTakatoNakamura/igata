@@ -162,7 +162,7 @@ class TodoApp extends React.Component<Props, State> {
           </button>
           <div
             role="presentation"
-            id="myModal"
+            id="createModal"
             className={style.modal}
             hidden={this.state.modalHidden}
             onClick={this.modalOutsideCliked}
