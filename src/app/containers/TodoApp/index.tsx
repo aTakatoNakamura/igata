@@ -174,7 +174,7 @@ class TodoApp extends React.Component<Props, State> {
           className={style.modal}
           hidden={this.state.modalHidden}
           onClick={this.modalOutsideClicked}
-          onKeyPress={() => ({})}
+          onKeyPress={() => {}}
         />
         <div className={style.modalContent} hidden={this.state.modalHidden}>
           <h1>Add Todo</h1>
