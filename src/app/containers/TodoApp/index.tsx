@@ -120,12 +120,25 @@ class TodoApp extends React.Component<Props, State> {
     this.props.markTodo(e.target.checked, id)
   }
 
-  modalOpen = () => this.setState({ modalHidden: false })
+  modalOpen = () => {
+    this.setState({
+      currentText: '',
+      modalHidden: false,
+    })
+  }
 
-  modalClose = () => this.setState({ modalHidden: true })
+  modalClose = () => {
+    this.setState({
+      currentText: '',
+      modalHidden: true,
+    })
+  }
 
   modalOutsideClicked = () => {
-    this.setState({ modalHidden: true })
+    this.setState({
+      currentText: '',
+      modalHidden: true,
+    })
   }
 
   render = () => {
