@@ -130,8 +130,6 @@ class TodoApp extends React.Component<Props, State> {
     }
   }
 
-  modalCloseKey = () => {}
-
   render = () => {
     const tokenHeader = (token: string) => (
       <p>
@@ -166,7 +164,7 @@ class TodoApp extends React.Component<Props, State> {
             className={style.modal}
             hidden={this.state.modalHidden}
             onClick={this.modalOutsideCliked}
-            onKeyPress={this.modalCloseKey}
+            onKeyPress={() => {}}
           >
             <div className={style.modalContent}>
               <button type="button" className={style.close} onClick={this.modalClose}>
