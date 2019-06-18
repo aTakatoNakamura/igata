@@ -135,13 +135,6 @@ class TodoApp extends React.Component<Props, State> {
     })
   }
 
-  modalOutsideClicked = () => {
-    this.setState({
-      currentText: '',
-      modalHidden: true,
-    })
-  }
-
   render = () => {
     const tokenHeader = (token: string) => (
       <p>
@@ -169,12 +162,7 @@ class TodoApp extends React.Component<Props, State> {
         <button type="button" onClick={this.modalOpen}>
           add Todo
         </button>
-        <Modal
-          modalHidden={this.state.modalHidden}
-          modalName="add todo"
-          modalOutsideClicked={this.modalOutsideClicked}
-          modalClose={this.modalClose}
-        >
+        <Modal modalHidden={this.state.modalHidden} modalName="add todo" OutsideClicked={this.modalClose} Close={this.modalClose}>
           <input
             className={style.inputTodo}
             type="text"

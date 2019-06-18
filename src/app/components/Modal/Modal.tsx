@@ -5,8 +5,8 @@ interface Props {
   modalHidden: boolean
   modalName: string
   children: React.ReactNode
-  modalOutsideClicked: () => void
-  modalClose: () => void
+  OutsideClicked: () => void
+  Close: () => void
 }
 interface State {}
 
@@ -19,12 +19,12 @@ export class Modal extends React.Component<Props, State> {
           id="createModal"
           className={style.modal}
           hidden={this.props.modalHidden}
-          onClick={this.props.modalOutsideClicked}
+          onClick={this.props.OutsideClicked}
           onKeyPress={() => {}}
         />
         <div className={style.modalContent} hidden={this.props.modalHidden}>
           <h1>Add todo</h1>
-          <button type="button" className={style.close} onClick={this.props.modalClose}>
+          <button type="button" className={style.close} onClick={this.props.Close}>
             &times;
           </button>
           {this.props.children}
