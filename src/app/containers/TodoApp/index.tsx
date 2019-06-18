@@ -122,7 +122,6 @@ class TodoApp extends React.Component<Props, State> {
   }
 
   modalOpen = () => {
-    console.log(typeof this.state.modalHidden)
     this.setState({
       currentText: '',
       modalHidden: false,
@@ -137,7 +136,6 @@ class TodoApp extends React.Component<Props, State> {
   }
 
   modalOutsideClicked = () => {
-    console.log(typeof this.state.modalHidden)
     this.setState({
       currentText: '',
       modalHidden: true,
