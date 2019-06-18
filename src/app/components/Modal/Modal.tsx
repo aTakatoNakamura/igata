@@ -16,7 +16,6 @@ export class Modal extends React.Component<Props, State> {
       <div>
         <div
           role="presentation"
-          id="createModal"
           className={style.modal}
           hidden={this.props.modalHidden}
           onClick={this.props.OutsideClicked}
