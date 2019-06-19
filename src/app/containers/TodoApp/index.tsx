@@ -19,6 +19,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import * as key from 'weak-key'
 import style from './style.scss'
+import { Modal } from '@/app/components/Modal'
 
 interface Props {
   title: string
@@ -43,10 +44,10 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = {
+  addTodo,
   editTodo,
   deleteTodo,
   markTodo,
-  addTodo,
   fetchTodos,
   logout,
 }
@@ -134,13 +135,6 @@ class TodoApp extends React.Component<Props, State> {
     })
   }
 
-  modalOutsideClicked = () => {
-    this.setState({
-      currentText: '',
-      modalHidden: true,
-    })
-  }
-
   render = () => {
     const tokenHeader = (token: string) => (
       <p>
@@ -168,19 +162,7 @@ class TodoApp extends React.Component<Props, State> {
         <button type="button" onClick={this.modalOpen}>
           add Todo
         </button>
-        <div
-          role="presentation"
-          id="createModal"
-          className={style.modal}
-          hidden={this.state.modalHidden}
-          onClick={this.modalOutsideClicked}
-          onKeyPress={() => {}}
-        />
-        <div className={style.modalContent} hidden={this.state.modalHidden}>
-          <h1>Add Todo</h1>
-          <button type="button" className={style.close} onClick={this.modalClose}>
-            &times;
-          </button>
+        <Modal hidden={this.state.modalHidden} name="add todo" close={this.modalClose}>
           <input
             className={style.inputTodo}
             type="text"
@@ -192,7 +174,7 @@ class TodoApp extends React.Component<Props, State> {
           <button type="button" className={style.addButton} onClick={this.handleAddTodoClick}>
             {words.todoApp.addTodo}
           </button>
-        </div>
+        </Modal>
         <ListWrapper>
           {this.props.todos.map((todo: Todo) => (
             <li className={style.list} key={key(todo)}>
