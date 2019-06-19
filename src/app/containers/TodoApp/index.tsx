@@ -162,7 +162,7 @@ class TodoApp extends React.Component<Props, State> {
         <button type="button" onClick={this.modalOpen}>
           add Todo
         </button>
-        <Modal hidden={this.state.modalHidden} name="add todo" outsideClicked={this.modalClose} close={this.modalClose}>
+        <Modal hidden={this.state.modalHidden} name="add todo" close={this.modalClose}>
           <input
             className={style.inputTodo}
             type="text"
