@@ -5,8 +5,8 @@ interface Props {
   modalHidden: boolean
   modalName: string
   children: React.ReactNode
-  OutsideClicked: () => void
-  Close: () => void
+  outsideClicked: (e: React.MouseEvent<HTMLDivElement>) => void
+  close: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const Modal: FC<Props> = (props: Props) => {
@@ -16,12 +16,12 @@ export const Modal: FC<Props> = (props: Props) => {
         role="presentation"
         className={style.modal}
         hidden={props.modalHidden}
-        onClick={props.OutsideClicked}
+        onClick={props.outsideClicked}
         onKeyPress={() => {}}
       />
       <div className={style.modalContent} hidden={props.modalHidden}>
-        <h1>Add todo</h1>
-        <button type="button" className={style.close} onClick={props.Close}>
+        <h1>{props.modalName}</h1>
+        <button type="button" className={style.close} onClick={props.close}>
           &times;
         </button>
         {props.children}
