@@ -19,7 +19,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import * as key from 'weak-key'
 import style from './style.scss'
-import { Modal } from '@/app/components/Modal/Modal'
+import { Modal } from '@/app/components/Modal'
 
 interface Props {
   title: string
