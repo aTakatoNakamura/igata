@@ -133,9 +133,9 @@ class TodoApp extends React.Component<Props, State> {
     })
   }
 
-  openModalForEdit = (id: number) => {
+  openModalForEdit = (id: number, text: string) => {
     this.setState({
-      currentText: '',
+      currentText: text,
       editModalHidden: false,
       selectedId: id,
     })
@@ -201,7 +201,7 @@ class TodoApp extends React.Component<Props, State> {
                 />
                 <label className={style.todoText}>{todo.id}</label>
                 <label className={style.todoText}>{todo.text}</label>
-                <button type="button" className={style.editButton} onClick={() => this.openModalForEdit(todo.id)}>
+                <button type="button" className={style.editButton} onClick={() => this.openModalForEdit(todo.id, todo.text)}>
                   edit Todo
                 </button>
                 <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
