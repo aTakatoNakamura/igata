@@ -202,7 +202,7 @@ class TodoApp extends React.Component<Props, State> {
                 <label className={style.todoText}>{todo.id}</label>
                 <label className={style.todoText}>{todo.text}</label>
                 <button type="button" className={style.editButton} onClick={() => this.openModalForEdit(todo.id)}>
-                  edit Todo
+                  edit
                 </button>
                 <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
                   delete
