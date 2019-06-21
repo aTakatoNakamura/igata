@@ -6,6 +6,7 @@ login:
 todoApp:
   name: TOP
   addTodo: ⇧
+  editTodo: 保存
   placeholder: TODO を入力してください
   fetchTodos: TODO を取得
   login: ログイン

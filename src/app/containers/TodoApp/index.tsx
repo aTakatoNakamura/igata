@@ -35,7 +35,9 @@ interface Props {
 
 interface State {
   currentText: string
-  modalHidden: boolean
+  addModalHidden: boolean
+  editModalHidden: boolean
+  selectedId: number
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -61,7 +63,9 @@ class TodoApp extends React.Component<Props, State> {
     super(props)
     this.state = {
       currentText: '',
-      modalHidden: true,
+      addModalHidden: true,
+      editModalHidden: true,
+      selectedId: -1,
     }
   }
 
@@ -72,7 +76,7 @@ class TodoApp extends React.Component<Props, State> {
     this.props.addTodo(this.state.currentText)
     this.setState({
       currentText: '',
-      modalHidden: true,
+      addModalHidden: true,
     })
   }
 
@@ -83,6 +87,8 @@ class TodoApp extends React.Component<Props, State> {
     this.props.editTodo(this.state.currentText, id)
     this.setState({
       currentText: '',
+      editModalHidden: true,
+      selectedId: -1,
     })
   }
 
@@ -101,7 +107,7 @@ class TodoApp extends React.Component<Props, State> {
 
   handleAddTodoClick = () => this.addTodo()
 
-  handleEditTodoClick = (e: any, id: number) => this.refreshTodo(e, id)
+  handleEditTodoClick = (e: React.MouseEvent<HTMLElement>) => this.refreshTodo(e, this.state.selectedId)
 
   handleAddKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
@@ -110,28 +116,38 @@ class TodoApp extends React.Component<Props, State> {
     this.addTodo()
   }
 
-  handleEditKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, id: number) => {
+  handleEditKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return
     }
-    this.refreshTodo(e, id)
+    this.refreshTodo(e, this.state.selectedId)
   }
 
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     this.props.markTodo(e.target.checked, id)
   }
 
-  modalOpen = () => {
+  openModalForAdd = () => {
     this.setState({
       currentText: '',
-      modalHidden: false,
+      addModalHidden: false,
+    })
+  }
+
+  openModalForEdit = (id: number, text: string) => {
+    this.setState({
+      currentText: text,
+      editModalHidden: false,
+      selectedId: id,
     })
   }
 
   modalClose = () => {
     this.setState({
       currentText: '',
-      modalHidden: true,
+      addModalHidden: true,
+      editModalHidden: true,
+      selectedId: -1,
     })
   }
 
@@ -159,10 +175,10 @@ class TodoApp extends React.Component<Props, State> {
             {words.todoApp.logout}
           </button>
         </div>
-        <button type="button" onClick={this.modalOpen}>
+        <button type="button" onClick={this.openModalForAdd}>
           add Todo
         </button>
-        <Modal hidden={this.state.modalHidden} name="add todo" close={this.modalClose}>
+        <Modal hidden={this.state.addModalHidden} name="add todo" close={this.modalClose}>
           <input
             className={style.inputTodo}
             type="text"
@@ -187,24 +203,29 @@ class TodoApp extends React.Component<Props, State> {
                 />
                 <label className={style.todoText}>{todo.id}</label>
                 <label className={style.todoText}>{todo.text}</label>
+                <button type="button" className={style.editButton} onClick={() => this.openModalForEdit(todo.id, todo.text)}>
+                  edit
+                </button>
                 <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
                   delete
                 </button>
               </div>
-              <input
-                className={style.inputTodo}
-                type="text"
-                onChange={this.handleInputChange}
-                onKeyPress={e => this.handleEditKeyPress(e, todo.id)}
-                placeholder={words.todoApp.editPlaceholder}
-                value={this.state.currentText}
-              />
-              <button type="button" className={style.addButton} onClick={e => this.handleEditTodoClick(e, todo.id)}>
-                {words.todoApp.addTodo}
-              </button>
             </li>
           ))}
         </ListWrapper>
+        <Modal hidden={this.state.editModalHidden} name="edit todo" close={this.modalClose}>
+          <input
+            className={style.inputTodo}
+            type="text"
+            onChange={this.handleInputChange}
+            onKeyPress={this.handleEditKeyPress}
+            placeholder={words.todoApp.editPlaceholder}
+            value={this.state.currentText}
+          />
+          <button type="button" className={style.addButton} onClick={this.handleEditTodoClick}>
+            {words.todoApp.editTodo}
+          </button>
+        </Modal>
       </div>
     )
   }

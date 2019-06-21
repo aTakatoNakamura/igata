@@ -6,6 +6,7 @@ login:
 todoApp:
   name: TOP
   addTodo: ⇧
+  editTodo: save
   placeholder: Enter your todo
   editPlaceholder: Edit your todo
   fetchTodos: Fetch Todos
