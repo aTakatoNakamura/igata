@@ -35,7 +35,9 @@ interface Props {
 
 interface State {
   currentText: string
-  modalHidden: boolean
+  addModalHidden: boolean
+  editModalHidden: boolean
+  selectedId: number
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -61,7 +63,9 @@ class TodoApp extends React.Component<Props, State> {
     super(props)
     this.state = {
       currentText: '',
-      modalHidden: true,
+      addModalHidden: true,
+      editModalHidden: true,
+      selectedId: -1,
     }
   }
 
@@ -72,7 +76,7 @@ class TodoApp extends React.Component<Props, State> {
     this.props.addTodo(this.state.currentText)
     this.setState({
       currentText: '',
-      modalHidden: true,
+      addModalHidden: true,
     })
   }
 
@@ -83,6 +87,7 @@ class TodoApp extends React.Component<Props, State> {
     this.props.editTodo(this.state.currentText, id)
     this.setState({
       currentText: '',
+      editModalHidden: true,
     })
   }
 
@@ -124,14 +129,23 @@ class TodoApp extends React.Component<Props, State> {
   modalOpen = () => {
     this.setState({
       currentText: '',
-      modalHidden: false,
+      addModalHidden: false,
+    })
+  }
+
+  editModalOpen = (id: number) => {
+    this.setState({
+      currentText: '',
+      editModalHidden: false,
+      selectedId: id,
     })
   }
 
   modalClose = () => {
     this.setState({
       currentText: '',
-      modalHidden: true,
+      addModalHidden: true,
+      editModalHidden: true,
     })
   }
 
@@ -162,7 +176,7 @@ class TodoApp extends React.Component<Props, State> {
         <button type="button" onClick={this.modalOpen}>
           add Todo
         </button>
-        <Modal hidden={this.state.modalHidden} name="add todo" close={this.modalClose}>
+        <Modal hidden={this.state.addModalHidden} name="add todo" close={this.modalClose}>
           <input
             className={style.inputTodo}
             type="text"
@@ -187,24 +201,29 @@ class TodoApp extends React.Component<Props, State> {
                 />
                 <label className={style.todoText}>{todo.id}</label>
                 <label className={style.todoText}>{todo.text}</label>
+                <button type="button" className={style.editButton} onClick={() => this.editModalOpen(todo.id)}>
+                  edit Todo
+                </button>
                 <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
                   delete
                 </button>
               </div>
-              <input
-                className={style.inputTodo}
-                type="text"
-                onChange={this.handleInputChange}
-                onKeyPress={e => this.handleEditKeyPress(e, todo.id)}
-                placeholder={words.todoApp.editPlaceholder}
-                value={this.state.currentText}
-              />
-              <button type="button" className={style.addButton} onClick={e => this.handleEditTodoClick(e, todo.id)}>
-                {words.todoApp.addTodo}
-              </button>
             </li>
           ))}
         </ListWrapper>
+        <Modal hidden={this.state.editModalHidden} name="edit todo" close={this.modalClose}>
+          <input
+            className={style.inputTodo}
+            type="text"
+            onChange={this.handleInputChange}
+            onKeyPress={e => this.handleEditKeyPress(e, this.state.selectedId)}
+            placeholder={words.todoApp.editPlaceholder}
+            value={this.state.currentText}
+          />
+          <button type="button" className={style.addButton} onClick={e => this.handleEditTodoClick(e, this.state.selectedId)}>
+            {words.todoApp.addTodo}
+          </button>
+        </Modal>
       </div>
     )
   }
