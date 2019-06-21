@@ -221,7 +221,7 @@ class TodoApp extends React.Component<Props, State> {
             value={this.state.currentText}
           />
           <button type="button" className={style.addButton} onClick={e => this.handleEditTodoClick(e, this.state.selectedId)}>
-            {words.todoApp.addTodo}
+            {words.todoApp.editTodo}
           </button>
         </Modal>
       </div>
