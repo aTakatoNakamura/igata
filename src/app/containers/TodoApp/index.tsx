@@ -126,14 +126,14 @@ class TodoApp extends React.Component<Props, State> {
     this.props.markTodo(e.target.checked, id)
   }
 
-  addModalOpen = () => {
+  openModalForAdd = () => {
     this.setState({
       currentText: '',
       addModalHidden: false,
     })
   }
 
-  editModalOpen = (id: number) => {
+  openModalForEdit = (id: number) => {
     this.setState({
       currentText: '',
       editModalHidden: false,
@@ -173,7 +173,7 @@ class TodoApp extends React.Component<Props, State> {
             {words.todoApp.logout}
           </button>
         </div>
-        <button type="button" onClick={this.addModalOpen}>
+        <button type="button" onClick={this.openModalForAdd}>
           add Todo
         </button>
         <Modal hidden={this.state.addModalHidden} name="add todo" close={this.modalClose}>
@@ -201,7 +201,7 @@ class TodoApp extends React.Component<Props, State> {
                 />
                 <label className={style.todoText}>{todo.id}</label>
                 <label className={style.todoText}>{todo.text}</label>
-                <button type="button" className={style.editButton} onClick={() => this.editModalOpen(todo.id)}>
+                <button type="button" className={style.editButton} onClick={() => this.openModalForEdit(todo.id)}>
                   edit Todo
                 </button>
                 <button type="button" className={style.deleteButton} onClick={e => this.handleDelete(e, todo.id)}>
