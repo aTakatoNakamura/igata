@@ -106,7 +106,7 @@ class TodoApp extends React.Component<Props, State> {
 
   handleAddTodoClick = () => this.addTodo()
 
-  handleEditTodoClick = (e: any, id: number) => this.refreshTodo(e, id)
+  handleEditTodoClick = (e: React.MouseEvent<HTMLElement>) => this.refreshTodo(e, this.state.selectedId)
 
   handleAddKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
@@ -115,11 +115,11 @@ class TodoApp extends React.Component<Props, State> {
     this.addTodo()
   }
 
-  handleEditKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, id: number) => {
+  handleEditKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return
     }
-    this.refreshTodo(e, id)
+    this.refreshTodo(e, this.state.selectedId)
   }
 
   handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
@@ -216,11 +216,11 @@ class TodoApp extends React.Component<Props, State> {
             className={style.inputTodo}
             type="text"
             onChange={this.handleInputChange}
-            onKeyPress={e => this.handleEditKeyPress(e, this.state.selectedId)}
+            onKeyPress={this.handleEditKeyPress}
             placeholder={words.todoApp.editPlaceholder}
             value={this.state.currentText}
           />
-          <button type="button" className={style.addButton} onClick={e => this.handleEditTodoClick(e, this.state.selectedId)}>
+          <button type="button" className={style.addButton} onClick={this.handleEditTodoClick}>
             {words.todoApp.editTodo}
           </button>
         </Modal>
