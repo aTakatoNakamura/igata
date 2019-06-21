@@ -126,7 +126,7 @@ class TodoApp extends React.Component<Props, State> {
     this.props.markTodo(e.target.checked, id)
   }
 
-  modalOpen = () => {
+  addModalOpen = () => {
     this.setState({
       currentText: '',
       addModalHidden: false,
@@ -173,7 +173,7 @@ class TodoApp extends React.Component<Props, State> {
             {words.todoApp.logout}
           </button>
         </div>
-        <button type="button" onClick={this.modalOpen}>
+        <button type="button" onClick={this.addModalOpen}>
           add Todo
         </button>
         <Modal hidden={this.state.addModalHidden} name="add todo" close={this.modalClose}>
