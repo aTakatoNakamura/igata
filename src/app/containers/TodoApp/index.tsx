@@ -88,6 +88,7 @@ class TodoApp extends React.Component<Props, State> {
     this.setState({
       currentText: '',
       editModalHidden: true,
+      selectedId: -1,
     })
   }
 
