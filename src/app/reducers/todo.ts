@@ -26,7 +26,7 @@ export const todoReducer: Reducer<TodoState, TodoAction> = (state: TodoState = d
           {
             done: false,
             text: action.payload.text,
-            id: state.todos[state.todos.length - 1].id + 1,
+            id: state.todos.length > 0 ? state.todos[state.todos.length - 1].id + 1 : 0,
           },
         ],
       }
